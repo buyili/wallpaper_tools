@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Open Release Dir" type="ShConfigurationType">
+  <configuration default="false" name="Open Windows Release Dir" type="ShConfigurationType">
     <option name="SCRIPT_TEXT" value="explorer .\build\windows\x64\runner\Release\" />
     <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
     <option name="SCRIPT_PATH" value="" />
