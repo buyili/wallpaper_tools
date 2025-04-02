@@ -1,8 +1,11 @@
 import 'package:cross_file/cross_file.dart';
 import 'package:desktop_drop/desktop_drop.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:wallpaper_tools/utils/cmd_utils.dart';
+import 'package:wallpaper_tools/utils/file_utils.dart';
 
 import '../utils/dialog_utils.dart';
 
@@ -58,8 +61,8 @@ class _MainPageState extends State<MainPage> {
                 onClearAll: onClearAll,
               ),
 
-              Text("Welcome to the app!"),
-              ElevatedButton(
+              SizedBox(height: 16),
+              FilledButton(
                 onPressed: () {
                   // Take a photo and save it to the device
                   String photoName = generatePhotoName();
@@ -96,6 +99,21 @@ class FileDropWidget extends StatefulWidget {
 
 class _FileDropWidgetState extends State<FileDropWidget> {
   bool _dragging = false;
+
+  void magickResizeTo1K(String size) {
+    for (var file in widget.list) {
+      var args = [
+        file.path,
+        "-resize",
+        size,
+        FileUtils.addSuffixToFileName(file.path, "_1k"),
+      ];
+      if (kDebugMode) {
+        print("magick ${args.join(" ")}");
+      }
+      CmdUtils.runCmd("magick", args);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -215,6 +233,60 @@ class _FileDropWidgetState extends State<FileDropWidget> {
                           );
                         },
                       ),
+            ),
+
+            SizedBox(height: 16),
+            Row(
+              children: [
+                const Spacer(),
+                const Text("Resize to:"),
+                SizedBox(width: 16),
+
+                FilledButton(
+                  onPressed:
+                      widget.list.isNotEmpty
+                          ? () {
+                            magickResizeTo1K("1920");
+                          }
+                          : null,
+                  child: Text("1920x"),
+                ),
+
+                SizedBox(width: 16),
+
+                FilledButton(
+                  onPressed:
+                      widget.list.isNotEmpty
+                          ? () {
+                            magickResizeTo1K("x1080");
+                          }
+                          : null,
+                  child: Text("x1080"),
+                ),
+
+                SizedBox(width: 16),
+
+                FilledButton(
+                  onPressed:
+                      widget.list.isNotEmpty
+                          ? () {
+                            magickResizeTo1K("1080");
+                          }
+                          : null,
+                  child: Text("1080x"),
+                ),
+                SizedBox(width: 16),
+
+                FilledButton(
+                  onPressed:
+                      widget.list.isNotEmpty
+                          ? () {
+                            magickResizeTo1K("x1920");
+                          }
+                          : null,
+                  child: Text("x1920"),
+                ),
+              ],
             ),
           ],
         ),
