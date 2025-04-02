@@ -115,6 +115,16 @@ class _FileDropWidgetState extends State<FileDropWidget> {
     }
   }
 
+  void magickRotate(String rotate) {
+    for (var file in widget.list) {
+      var args = ["convert", "-rotate", rotate, file.path, file.path];
+      if (kDebugMode) {
+        print("magick ${args.join(" ")}");
+      }
+      CmdUtils.runCmd("magick", args);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return DropTarget(
@@ -238,6 +248,43 @@ class _FileDropWidgetState extends State<FileDropWidget> {
             SizedBox(height: 16),
             Row(
               children: [
+                const Text("Rotate to:"),
+                SizedBox(width: 16),
+
+                FilledButton(
+                  onPressed:
+                      widget.list.isNotEmpty
+                          ? () {
+                            magickRotate("90");
+                          }
+                          : null,
+                  child: Text("90"),
+                ),
+
+                SizedBox(width: 16),
+
+                FilledButton(
+                  onPressed:
+                      widget.list.isNotEmpty
+                          ? () {
+                            magickRotate("-90");
+                          }
+                          : null,
+                  child: Text("-90"),
+                ),
+
+                SizedBox(width: 16),
+
+                FilledButton(
+                  onPressed:
+                      widget.list.isNotEmpty
+                          ? () {
+                            magickRotate("180");
+                          }
+                          : null,
+                  child: Text("180"),
+                ),
+
                 const Spacer(),
                 const Text("Resize to:"),
                 SizedBox(width: 16),
