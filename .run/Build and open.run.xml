@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="flutter build windows" type="ShConfigurationType">
-    <option name="SCRIPT_TEXT" value="flutter build windows" />
+  <configuration default="false" name="Build and open" type="ShConfigurationType">
+    <option name="SCRIPT_TEXT" value="" />
     <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
     <option name="SCRIPT_PATH" value="" />
     <option name="SCRIPT_OPTIONS" value="" />
@@ -12,6 +12,9 @@
     <option name="EXECUTE_IN_TERMINAL" value="true" />
     <option name="EXECUTE_SCRIPT_FILE" value="false" />
     <envs />
-    <method v="2" />
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Flutter build windows" run_configuration_type="ShConfigurationType" />
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Open Windows Release Dir" run_configuration_type="ShConfigurationType" />
+    </method>
   </configuration>
 </component>

@@ -19,6 +19,8 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   // selected apk files
   final List<XFile> _selectedFileList = [];
+  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
 
   // generate magick script
   void onGenerateMagickScript() {
@@ -41,39 +43,42 @@ class _MainPageState extends State<MainPage> {
   void copyToClipboard(String text) async {
     await Clipboard.setData(ClipboardData(text: text));
     // 可选：显示一个提示给用户，告诉他们文本已经被复制
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text("Text copied to clipboard")));
+    scaffoldMessengerKey.currentState?.showSnackBar(
+      SnackBar(content: Text("Text copied to clipboard")),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(16),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              FileDropWidget(
-                list: _selectedFileList,
-                onGenerateMagickScript: onGenerateMagickScript,
-                onClearAll: onClearAll,
-              ),
+    return ScaffoldMessenger(
+      key: scaffoldMessengerKey,
+      child: Scaffold(
+        body: Container(
+          padding: const EdgeInsets.all(16),
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                FileDropWidget(
+                  list: _selectedFileList,
+                  onGenerateMagickScript: onGenerateMagickScript,
+                  onClearAll: onClearAll,
+                ),
 
-              SizedBox(height: 16),
-              FilledButton(
-                onPressed: () {
-                  // Take a photo and save it to the device
-                  String photoName = generatePhotoName();
+                SizedBox(height: 16),
+                FilledButton(
+                  onPressed: () {
+                    // Take a photo and save it to the device
+                    String photoName = generatePhotoName();
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Photo saved as $photoName")),
-                  );
-                },
-                child: Text("Take a photo"),
-              ),
-            ],
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Photo saved as $photoName")),
+                    );
+                  },
+                  child: Text("Take a photo"),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -198,7 +203,7 @@ class _FileDropWidgetState extends State<FileDropWidget> {
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey, width: 1),
                 borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                color: Theme.of(context).primaryColor.withOpacity(0.1),
+                color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
               ),
               child:
                   widget.list.isEmpty
