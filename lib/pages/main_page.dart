@@ -203,7 +203,10 @@ class _FileDropWidgetState extends State<FileDropWidget> {
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey, width: 1),
                 borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                color:
+                    _dragging
+                        ? Colors.black26
+                        : Theme.of(context).primaryColor.withValues(alpha: 0.1),
               ),
               child:
                   widget.list.isEmpty
