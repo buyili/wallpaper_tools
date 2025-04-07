@@ -22,17 +22,6 @@ class _MainPageState extends State<MainPage> {
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 
-  // generate magick script
-  void onGenerateMagickScript() {
-    var outText = _selectedFileList
-        .map((file) {
-          return "magick ${file.name} ${file.name}.jpg";
-        })
-        .toList()
-        .join("\n");
-    copyToClipboard(outText);
-  }
-
   // clear all apk files
   void onClearAll() {
     setState(() {
@@ -61,7 +50,6 @@ class _MainPageState extends State<MainPage> {
               children: [
                 FileDropWidget(
                   list: _selectedFileList,
-                  onGenerateMagickScript: onGenerateMagickScript,
                   onClearAll: onClearAll,
                 ),
 
@@ -88,13 +76,11 @@ class _MainPageState extends State<MainPage> {
 
 class FileDropWidget extends StatefulWidget {
   final List<XFile> list;
-  final Function() onGenerateMagickScript;
   final Function() onClearAll;
 
   const FileDropWidget({
     super.key,
     required this.list,
-    required this.onGenerateMagickScript,
     required this.onClearAll,
   });
 
@@ -105,18 +91,39 @@ class FileDropWidget extends StatefulWidget {
 class _FileDropWidgetState extends State<FileDropWidget> {
   bool _dragging = false;
 
-  void magickResizeTo1K(String size) {
+  // generate magick script
+  void onMagickSuffixToJPG() {
     for (var file in widget.list) {
-      var args = [
-        file.path,
-        "-resize",
-        size,
-        FileUtils.addSuffixToFileName(file.path, "_1k"),
-      ];
+      var newFilePath = FileUtils.changeSuffix(file.path, "jpg");
+      List<String> args = [file.path, newFilePath];
       if (kDebugMode) {
         print("magick ${args.join(" ")}");
       }
-      CmdUtils.runCmd("magick", args);
+
+      FileUtils.checkFileAndConfirm(
+        context,
+        newFilePath,
+        onConfirmed: () {
+          CmdUtils.runCmd("magick", args);
+        },
+      );
+    }
+  }
+
+  void magickResizeTo1K(String size) {
+    for (var file in widget.list) {
+      var newFilePath = FileUtils.addSuffixToFileName(file.path, "_1k");
+      var args = [file.path, "-resize", size, newFilePath];
+      if (kDebugMode) {
+        print("magick ${args.join(" ")}");
+      }
+      FileUtils.checkFileAndConfirm(
+        context,
+        newFilePath,
+        onConfirmed: () {
+          CmdUtils.runCmd("magick", args);
+        },
+      );
     }
   }
 
@@ -182,10 +189,8 @@ class _FileDropWidgetState extends State<FileDropWidget> {
                     const SizedBox(width: 10),
                     FilledButton(
                       onPressed:
-                          widget.list.isNotEmpty
-                              ? widget.onGenerateMagickScript
-                              : null,
-                      child: const Text("Generate Magick Script"),
+                          widget.list.isNotEmpty ? onMagickSuffixToJPG : null,
+                      child: const Text("Suffix to JPG"),
                     ),
                     const SizedBox(width: 16),
                     FilledButton(
@@ -224,7 +229,7 @@ class _FileDropWidgetState extends State<FileDropWidget> {
                             ),
                             child: Row(
                               children: [
-                                const Icon(Icons.android),
+                                const Icon(Icons.image),
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: Row(
