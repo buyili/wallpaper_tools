@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 
 class FileUtils {
   static String addSuffixToFileName(String fileName, String suffix) {

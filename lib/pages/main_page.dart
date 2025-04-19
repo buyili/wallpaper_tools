@@ -150,8 +150,8 @@ class _FileDropWidgetState extends State<FileDropWidget> {
         if (files.isEmpty) {
           DialogUtils.showInfoDialog(
             context,
-            "No new APK files were dropped",
-            "You can only drop APK files that are not already selected",
+            "No new images were dropped",
+            "You can only drop images that are not already selected",
           );
           return;
         }
@@ -216,7 +216,7 @@ class _FileDropWidgetState extends State<FileDropWidget> {
               child:
                   widget.list.isEmpty
                       ? const Center(
-                        child: Text("Drag and drop APK or other files here"),
+                        child: Text("Drag and drop images here"),
                       )
                       : ListView.builder(
                         itemCount: widget.list.length,
