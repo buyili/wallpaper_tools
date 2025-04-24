@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wallpaper_tools/pages/main_page.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -19,7 +20,7 @@ Future<void> main() async {
     await windowManager.focus();
   });
 
-  runApp(const MyApp());
+  runApp(ProviderScope(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

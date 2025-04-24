@@ -26,16 +26,8 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   // selected apk files
-  final List<XFile> _selectedFileList = [];
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
-
-  // clear all apk files
-  void onClearAll() {
-    setState(() {
-      _selectedFileList.clear();
-    });
-  }
 
   void copyToClipboard(String text) async {
     await Clipboard.setData(ClipboardData(text: text));
@@ -59,7 +51,7 @@ class _MainPageState extends State<MainPage> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Flexible(flex: 8, child: FileDropWidget(list: _selectedFileList, onClearAll: onClearAll)),
+                    Flexible(flex: 8, child: FileDropWidget()),
                     Flexible(flex: 5, child: ResizeOpt())
                   ],
                 ),
