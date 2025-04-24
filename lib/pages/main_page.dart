@@ -43,49 +43,47 @@ class _MainPageState extends State<MainPage> {
       child: Scaffold(
         body: Container(
           padding: const EdgeInsets.all(16),
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(flex: 8, child: FileDropWidget()),
-                    Flexible(flex: 5, child: ResizeOpt())
-                  ],
-                ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(flex: 8, child: FileDropWidget()),
+                  Flexible(flex: 5, child: ResizeOpt())
+                ],
+              ),
 
-                SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FilledButton(
-                      onPressed: () {
-                        // Take a photo and save it to the device
-                        String photoName = generatePhotoName(pattern1);
+              SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FilledButton(
+                    onPressed: () {
+                      // Take a photo and save it to the device
+                      String photoName = generatePhotoName(pattern1);
 
-                        scaffoldMessengerKey.currentState?.showSnackBar(
-                          SnackBar(content: Text("Photo saved as $photoName")),
-                        );
-                      },
-                      child: Text("Take a photo name by pattern1"),
-                    ),
-                    const SizedBox(width: 16),
-                    FilledButton(
-                      onPressed: () {
-                        // Take a photo and save it to the device
-                        String photoName = generatePhotoName(pattern2);
+                      scaffoldMessengerKey.currentState?.showSnackBar(
+                        SnackBar(content: Text("Photo saved as $photoName")),
+                      );
+                    },
+                    child: Text("Take a photo name by pattern1"),
+                  ),
+                  const SizedBox(width: 16),
+                  FilledButton(
+                    onPressed: () {
+                      // Take a photo and save it to the device
+                      String photoName = generatePhotoName(pattern2);
 
-                        scaffoldMessengerKey.currentState?.showSnackBar(
-                          SnackBar(content: Text("Photo saved as $photoName")),
-                        );
-                      },
-                      child: Text("Take a photo name by pattern2"),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                      scaffoldMessengerKey.currentState?.showSnackBar(
+                        SnackBar(content: Text("Photo saved as $photoName")),
+                      );
+                    },
+                    child: Text("Take a photo name by pattern2"),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
