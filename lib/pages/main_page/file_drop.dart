@@ -1,4 +1,3 @@
-import 'package:cross_file/cross_file.dart';
 import 'package:desktop_drop/desktop_drop.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +19,17 @@ class _FileDropWidgetState extends ConsumerState<FileDropWidget> {
   bool _dragging = false;
 
   // generate magick script
-  void onMagickSuffixToJPG() {
+  void _toggleMagickSuffixToJPG() {
+    _toggleMagickChangeSuffix("jpg");
+  }
+
+  void _toggleMagickSuffixToPNG() {
+    _toggleMagickChangeSuffix("png");
+  }
+
+  void _toggleMagickChangeSuffix(String suffix) {
     for (var file in ref.read(selectedFilesProvider)) {
-      var newFilePath = FileUtils.changeSuffix(file.path, "jpg");
+      var newFilePath = FileUtils.changeSuffix(file.path, suffix);
       List<String> args = [file.path, newFilePath];
       if (kDebugMode) {
         print("magick ${args.join(" ")}");
@@ -66,10 +73,6 @@ class _FileDropWidgetState extends ConsumerState<FileDropWidget> {
   }
 
   void _toggleClearAll() {
-    // ref.read(selectedFilesProvider.notifier).update((state) {
-    //   state.clear();
-    //   return state;
-    // });
     ref.read(selectedFilesProvider.notifier).update((state) => []);
   }
 
@@ -128,7 +131,13 @@ class _FileDropWidgetState extends ConsumerState<FileDropWidget> {
                     const SizedBox(width: 10),
                     FilledButton(
                       onPressed:
-                          selectedFiles.isNotEmpty ? onMagickSuffixToJPG : null,
+                      selectedFiles.isNotEmpty ? _toggleMagickSuffixToPNG : null,
+                      child: const Text("Suffix to PNG"),
+                    ),
+                    const SizedBox(width: 10),
+                    FilledButton(
+                      onPressed:
+                          selectedFiles.isNotEmpty ? _toggleMagickSuffixToJPG : null,
                       child: const Text("Suffix to JPG"),
                     ),
                     const SizedBox(width: 16),
@@ -203,39 +212,22 @@ class _FileDropWidgetState extends ConsumerState<FileDropWidget> {
                     const Text("Rotate to:"),
                     SizedBox(width: 16),
 
-                    FilledButton(
-                      onPressed:
-                          selectedFiles.isNotEmpty
-                              ? () {
-                                magickRotate("90");
-                              }
-                              : null,
-                      child: Text("90"),
-                    ),
-
-                    SizedBox(width: 16),
-
-                    FilledButton(
-                      onPressed:
-                          selectedFiles.isNotEmpty
-                              ? () {
-                                magickRotate("-90");
-                              }
-                              : null,
-                      child: Text("-90"),
-                    ),
-
-                    SizedBox(width: 16),
-
-                    FilledButton(
-                      onPressed:
-                          selectedFiles.isNotEmpty
-                              ? () {
-                                magickRotate("180");
-                              }
-                              : null,
-                      child: Text("180"),
-                    ),
+                    ...["90", "-90", "180", "-180"]
+                        .map(
+                          (rotate) => [
+                            FilledButton(
+                              onPressed:
+                                  selectedFiles.isNotEmpty
+                                      ? () {
+                                        magickRotate(rotate);
+                                      }
+                                      : null,
+                              child: Text(rotate),
+                            ),
+                            SizedBox(width: 16),
+                          ],
+                        )
+                        .expand((e) => e),
                   ],
                 ),
 
@@ -246,50 +238,22 @@ class _FileDropWidgetState extends ConsumerState<FileDropWidget> {
                     const Text("Resize to:"),
                     SizedBox(width: 16),
 
-                    FilledButton(
-                      onPressed:
-                          selectedFiles.isNotEmpty
-                              ? () {
-                                magickResizeTo1K("1920");
-                              }
-                              : null,
-                      child: Text("1920x"),
-                    ),
-
-                    SizedBox(width: 16),
-
-                    FilledButton(
-                      onPressed:
-                          selectedFiles.isNotEmpty
-                              ? () {
-                                magickResizeTo1K("x1080");
-                              }
-                              : null,
-                      child: Text("x1080"),
-                    ),
-
-                    SizedBox(width: 16),
-
-                    FilledButton(
-                      onPressed:
-                          selectedFiles.isNotEmpty
-                              ? () {
-                                magickResizeTo1K("1080");
-                              }
-                              : null,
-                      child: Text("1080x"),
-                    ),
-                    SizedBox(width: 16),
-
-                    FilledButton(
-                      onPressed:
-                          selectedFiles.isNotEmpty
-                              ? () {
-                                magickResizeTo1K("x1920");
-                              }
-                              : null,
-                      child: Text("x1920"),
-                    ),
+                    ...['1920x', 'x1080', '1080x', 'x1920']
+                        .map(
+                          (rotate) => [
+                            FilledButton(
+                              onPressed:
+                                  selectedFiles.isNotEmpty
+                                      ? () {
+                                        magickResizeTo1K(rotate);
+                                      }
+                                      : null,
+                              child: Text(rotate),
+                            ),
+                            SizedBox(width: 16),
+                          ],
+                        )
+                        .expand((e) => e),
                   ],
                 ),
               ],
