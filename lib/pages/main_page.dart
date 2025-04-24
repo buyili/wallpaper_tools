@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import 'main_page/file_drop.dart';
+import 'main_page/resize_opt.dart';
 
 
 var pattern1 = 'yyyy-MM-dd_HH-mm-ss';
@@ -55,7 +56,13 @@ class _MainPageState extends State<MainPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                FileDropWidget(list: _selectedFileList, onClearAll: onClearAll),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(flex: 8, child: FileDropWidget(list: _selectedFileList, onClearAll: onClearAll)),
+                    Flexible(flex: 5, child: ResizeOpt())
+                  ],
+                ),
 
                 SizedBox(height: 16),
                 Row(

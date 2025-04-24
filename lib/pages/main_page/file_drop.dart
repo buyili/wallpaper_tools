@@ -191,92 +191,101 @@ class _FileDropWidgetState extends State<FileDropWidget> {
             ),
 
             SizedBox(height: 16),
-            Row(
+            Column(
               children: [
-                const Text("Rotate to:"),
-                SizedBox(width: 16),
+                Row(
+                  children: [
+                    const Text("Rotate to:"),
+                    SizedBox(width: 16),
 
-                FilledButton(
-                  onPressed:
-                  widget.list.isNotEmpty
-                      ? () {
-                    magickRotate("90");
-                  }
-                      : null,
-                  child: Text("90"),
+                    FilledButton(
+                      onPressed:
+                      widget.list.isNotEmpty
+                          ? () {
+                        magickRotate("90");
+                      }
+                          : null,
+                      child: Text("90"),
+                    ),
+
+                    SizedBox(width: 16),
+
+                    FilledButton(
+                      onPressed:
+                      widget.list.isNotEmpty
+                          ? () {
+                        magickRotate("-90");
+                      }
+                          : null,
+                      child: Text("-90"),
+                    ),
+
+                    SizedBox(width: 16),
+
+                    FilledButton(
+                      onPressed:
+                      widget.list.isNotEmpty
+                          ? () {
+                        magickRotate("180");
+                      }
+                          : null,
+                      child: Text("180"),
+                    ),
+                  ],
                 ),
 
-                SizedBox(width: 16),
+                const SizedBox(height: 16),
 
-                FilledButton(
-                  onPressed:
-                  widget.list.isNotEmpty
-                      ? () {
-                    magickRotate("-90");
-                  }
-                      : null,
-                  child: Text("-90"),
-                ),
+                Row(
+                  children: [
+                    const Text("Resize to:"),
+                    SizedBox(width: 16),
 
-                SizedBox(width: 16),
+                    FilledButton(
+                      onPressed:
+                      widget.list.isNotEmpty
+                          ? () {
+                        magickResizeTo1K("1920");
+                      }
+                          : null,
+                      child: Text("1920x"),
+                    ),
 
-                FilledButton(
-                  onPressed:
-                  widget.list.isNotEmpty
-                      ? () {
-                    magickRotate("180");
-                  }
-                      : null,
-                  child: Text("180"),
-                ),
+                    SizedBox(width: 16),
 
-                const Spacer(),
-                const Text("Resize to:"),
-                SizedBox(width: 16),
+                    FilledButton(
+                      onPressed:
+                      widget.list.isNotEmpty
+                          ? () {
+                        magickResizeTo1K("x1080");
+                      }
+                          : null,
+                      child: Text("x1080"),
+                    ),
 
-                FilledButton(
-                  onPressed:
-                  widget.list.isNotEmpty
-                      ? () {
-                    magickResizeTo1K("1920");
-                  }
-                      : null,
-                  child: Text("1920x"),
-                ),
+                    SizedBox(width: 16),
 
-                SizedBox(width: 16),
+                    FilledButton(
+                      onPressed:
+                      widget.list.isNotEmpty
+                          ? () {
+                        magickResizeTo1K("1080");
+                      }
+                          : null,
+                      child: Text("1080x"),
+                    ),
+                    SizedBox(width: 16),
 
-                FilledButton(
-                  onPressed:
-                  widget.list.isNotEmpty
-                      ? () {
-                    magickResizeTo1K("x1080");
-                  }
-                      : null,
-                  child: Text("x1080"),
-                ),
-
-                SizedBox(width: 16),
-
-                FilledButton(
-                  onPressed:
-                  widget.list.isNotEmpty
-                      ? () {
-                    magickResizeTo1K("1080");
-                  }
-                      : null,
-                  child: Text("1080x"),
-                ),
-                SizedBox(width: 16),
-
-                FilledButton(
-                  onPressed:
-                  widget.list.isNotEmpty
-                      ? () {
-                    magickResizeTo1K("x1920");
-                  }
-                      : null,
-                  child: Text("x1920"),
+                    FilledButton(
+                      onPressed:
+                      widget.list.isNotEmpty
+                          ? () {
+                        magickResizeTo1K("x1920");
+                      }
+                          : null,
+                      child: Text("x1920"),
+                    ),
+                  ],
                 ),
               ],
             ),
