@@ -63,7 +63,15 @@ class ResizeOpt extends ConsumerStatefulWidget {
 }
 
 class _ResizeOptState extends ConsumerState<ResizeOpt> {
+
   void _magickResize(ResizeOptions resizeData) {
+    if (ref.read(selectedFilesProvider).isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select at least one file.'))
+      );
+      return;
+    }
+
     for (var file in ref.read(selectedFilesProvider)) {
       var newFilePath = FileUtils.addSuffixToFileName(
         file.path,
