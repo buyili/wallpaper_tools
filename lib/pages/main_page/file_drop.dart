@@ -2,6 +2,7 @@ import 'package:desktop_drop/desktop_drop.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wallpaper_tools/pages/main_page/image_list_widget.dart';
 import 'package:wallpaper_tools/providers/file_provider.dart';
 
 import '../../utils/cmd_utils.dart';
@@ -150,7 +151,9 @@ class _FileDropWidgetState extends ConsumerState<FileDropWidget> {
                 ),
               ],
             ),
+
             const SizedBox(height: 10),
+
             Container(
               height: 450,
               decoration: BoxDecoration(
@@ -164,44 +167,7 @@ class _FileDropWidgetState extends ConsumerState<FileDropWidget> {
               child:
                   selectedFiles.isEmpty
                       ? const Center(child: Text("Drag and drop images here"))
-                      : ListView.builder(
-                        itemCount: selectedFiles.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                              left: 10.0,
-                              top: 8.0,
-                              right: 8,
-                            ),
-                            child: Row(
-                              children: [
-                                const Icon(Icons.image),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(selectedFiles[index].name),
-                                      IconButton(
-                                        icon: const Icon(
-                                          Icons.delete,
-                                          color: Colors.red,
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            selectedFiles.removeAt(index);
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
+                      : ImageListWidget(),
             ),
 
             SizedBox(height: 16),
