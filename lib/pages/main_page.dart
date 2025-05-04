@@ -28,11 +28,13 @@ class _MainPageState extends State<MainPage> {
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 
-  void copyToClipboard(String text) async {
+  void copyToClipboard(String text, {
+    String? snackBarText,
+  }) async {
     await Clipboard.setData(ClipboardData(text: text));
     // 可选：显示一个提示给用户，告诉他们文本已经被复制
     scaffoldMessengerKey.currentState?.showSnackBar(
-      SnackBar(content: Text("Text copied to clipboard")),
+      SnackBar(content: Text(snackBarText ?? "Text copied to clipboard")),
     );
   }
 
@@ -63,9 +65,7 @@ class _MainPageState extends State<MainPage> {
                       // Take a photo and save it to the device
                       String photoName = generatePhotoName(pattern1);
 
-                      scaffoldMessengerKey.currentState?.showSnackBar(
-                        SnackBar(content: Text("Photo saved as $photoName")),
-                      );
+                      copyToClipboard(photoName, snackBarText: "Photo saved as $photoName");
                     },
                     child: Text("Take a photo name by pattern1"),
                   ),
@@ -75,9 +75,7 @@ class _MainPageState extends State<MainPage> {
                       // Take a photo and save it to the device
                       String photoName = generatePhotoName(pattern2);
 
-                      scaffoldMessengerKey.currentState?.showSnackBar(
-                        SnackBar(content: Text("Photo saved as $photoName")),
-                      );
+                      copyToClipboard(photoName, snackBarText: "Photo saved as $photoName");
                     },
                     child: Text("Take a photo name by pattern2"),
                   ),
