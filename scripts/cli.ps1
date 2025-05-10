@@ -22,8 +22,28 @@ function Show-HelpInfo {
 
 # 处理参数
 if ($args.Length -eq 0) {
-    Show-HelpInfo
-    return
+    Write-Host "Please select an option:"
+    Write-Host "1. Build the Windows project"
+    Write-Host "2. Copy the built files"
+    Write-Host "3. Build and copy"
+    Write-Host "4. Show help"
+    $choice = Read-Host "Enter your choice (1-4)"
+    switch ($choice) {
+        "1" { $shouldBuild = $true }
+        "2" { $shouldCopy = $true }
+        "3" { 
+            $shouldBuild = $true 
+            $shouldCopy = $true 
+        }
+        "4" {
+            Show-HelpInfo
+            return
+        }
+        default {
+            Write-Host "Invalid choice. Exiting." -ForegroundColor Red
+            return
+        }
+    }
 } else {
     foreach ($arg in $args) {
         switch ($arg) {
