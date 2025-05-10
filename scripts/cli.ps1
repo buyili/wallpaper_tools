@@ -4,15 +4,39 @@ $destinationPath = "D:/src/WallpaperTools"
 $shouldBuild = $false
 $shouldCopy = $false
 
+# 定义函数用于输出帮助信息
+function Show-HelpInfo {
+    Write-Host "Usage: cli.ps1 [options]"
+    Write-Host "Options:"
+    Write-Host "  --build-windows    Build the Windows project using Flutter."
+    Write-Host "  --copy             Copy the built files to the destination directory."
+    Write-Host "  --help, -h         Show this help message and exit."
+    Write-Host ""
+    Write-Host "Examples:"
+    Write-Host "  cli.ps1 --build-windows"
+    Write-Host "  cli.ps1 --copy"
+    Write-Host "  cli.ps1 --build-windows --copy"
+    Write-Host "  cli.ps1 -h"
+    Write-Host ""
+}
+
 # 处理参数
 if ($args.Length -eq 0) {
-    $shouldBuild = $true
-    $shouldCopy = $true
+    Show-HelpInfo
+    return
 } else {
     foreach ($arg in $args) {
         switch ($arg) {
             "--build-windows" { $shouldBuild = $true }
             "--copy" { $shouldCopy = $true }
+            "--help"{
+                Show-HelpInfo
+                return
+            }
+            "-h" {
+                Show-HelpInfo
+                return
+            }
             default {
                 Write-Host "Unknown parameter: $arg" -ForegroundColor Red
                 return
